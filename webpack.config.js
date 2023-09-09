@@ -9,8 +9,10 @@ module.exports = {
   },
   devtool: 'source-map',
   resolve: {
+    modules: [path.resolve(__dirname, './'), 'node_modules'],
     alias: {
       '@components': path.join(__dirname, 'src/components'),
+      '@constants': path.join(__dirname, 'src/constants'),
     },
   },
   devServer: {
