@@ -1,12 +1,27 @@
 {
   "extends": ["airbnb","prettier"],
   "plugins": ["prettier"],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2020
+  },
   "env": {
+    "es6": true,
     "browser": true,
     "node": true
   },
   "rules": {
     "quotes": ["error", "single"],
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["error"],
+    "import/prefer-default-export": ["off"],
+    "import/no-unresolved": ["off"]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js"],
+        "moduleDirectory": ["node_modules", "./"]
+      }
+    }
   }
 }
