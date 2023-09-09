@@ -7,16 +7,11 @@ import {
   mainSort,
   showMoreBtn,
 } from '@components';
+import { generateFilms } from 'src/mocks/generate-films';
+import { render } from 'src/helpers';
 
-const Positions = {
-  BEFOREEND: 'beforeend',
-};
-
-const render = (container, template, position = Positions.BEFOREEND) => {
-  container.insertAdjacentHTML(position, template);
-};
-
-const createElements = () => {
+const init = () => {
+  const films = generateFilms(20);
   const body$ = document.querySelector('body');
   const header$ = body$.querySelector('.header');
   const main$ = body$.querySelector('.main');
@@ -30,8 +25,8 @@ const createElements = () => {
   const containerForFilmList$ = containerForFilms$.querySelector('.films-list');
   const containerForFilmListCard$ = containerForFilmList$.querySelector('.films-list__container');
 
-  [1, 2, 3, 4, 5].forEach(() => {
-    render(containerForFilmListCard$, filmCard());
+  films.forEach((film) => {
+    render(containerForFilmListCard$, filmCard(film));
   });
 
   render(containerForFilmList$, showMoreBtn());
@@ -49,10 +44,10 @@ const createElements = () => {
   const mostCommentedContainerFilmsContainer$ = mostCommentedContainer$.querySelector('.films-list__container');
 
   [topRatedContainerFilmsContainer$, mostCommentedContainerFilmsContainer$].forEach((container) => {
-    [1, 2].forEach(() => {
-      render(container, filmCard());
+    [films[0], films[1]].forEach((film) => {
+      render(container, filmCard(film));
     });
   });
 };
 
-createElements();
+init();
