@@ -1,4 +1,4 @@
-import { createElement } from '@helpers';
+import { createElement } from '@helpers/render';
 
 const createShowMoreBtnTemplate = () => '<button class="films-list__show-more">Show more</button>';
 

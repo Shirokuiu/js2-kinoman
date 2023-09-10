@@ -1,5 +1,4 @@
 import { generateFilms } from 'src/mocks/generate-films';
-import { render } from '@helpers';
 import HeaderProfileComponent from '@components/header-profile-component';
 import MainNavigationComponent from '@components/main-navigation-component';
 import MainSortComponent from '@components/main-sort-component';
@@ -7,43 +6,41 @@ import FilmListComponent from '@components/film-list-component';
 import FilmCardComponent from '@components/film-card-component';
 import ShowMoreBtnComponent from '@components/show-more-btn-component';
 import FilmListExtraComponent from '@components/film-list-extra-component';
+import { render } from '@helpers/render';
 
-const renderFilm = (containerElement$, film) => {
-  const filmCardComponentInstance = new FilmCardComponent(film);
-
-  render(containerElement$, filmCardComponentInstance.getElement());
-};
-
-const renderFilmListExtra = (container, id, title, films) => {
+const renderFilmListExtra = (container$, id, title, films) => {
   const [firstFilm, secondFilm] = films;
-  const filmListExtraComponent$ = new FilmListExtraComponent(id, title).getElement();
-  const filmListExtraContainerForFilms$ = filmListExtraComponent$.querySelector('.films-list__container');
+  const filmListExtraComponentInstance = new FilmListExtraComponent(id, title);
+  const filmListExtraContainerForFilms$ = filmListExtraComponentInstance
+    .getElement()
+    .querySelector('.films-list__container');
 
-  render(container, filmListExtraComponent$);
+  render(container$, filmListExtraComponentInstance);
 
   [firstFilm, secondFilm].forEach((film) => {
-    render(filmListExtraContainerForFilms$, new FilmCardComponent(film).getElement());
+    render(filmListExtraContainerForFilms$, new FilmCardComponent(film));
   });
 };
 
 const renderFilmList = (container$, films) => {
-  const filmListComponent$ = new FilmListComponent().getElement();
+  const filmListInstance = new FilmListComponent();
 
-  render(container$, filmListComponent$);
+  render(container$, filmListInstance);
 
-  const filmsListContainer$ = filmListComponent$.querySelector('.films-list');
-  const filmsContainer$ = filmListComponent$.querySelector('.films-list__container');
+  const filmsListContainer$ = filmListInstance.getElement().querySelector('.films-list');
+  const filmsContainer$ = filmListInstance.getElement().querySelector('.films-list__container');
+
   films.forEach((film) => {
-    renderFilm(filmsContainer$, film);
+    render(filmsContainer$, new FilmCardComponent(film));
   });
 
-  render(filmsListContainer$, new ShowMoreBtnComponent().getElement());
+  render(filmsListContainer$, new ShowMoreBtnComponent());
 
   [
     { id: 'topRated', title: 'Top rated' },
     { id: 'mostCommented', title: 'Most commented' },
   ].forEach(({ id, title }) => {
-    renderFilmListExtra(filmListComponent$, id, title, films);
+    renderFilmListExtra(filmListInstance.getElement(), id, title, films);
   });
 };
 
@@ -53,9 +50,9 @@ const init = () => {
   const header$ = body$.querySelector('.header');
   const main$ = body$.querySelector('.main');
 
-  render(header$, new HeaderProfileComponent().getElement());
-  render(main$, new MainNavigationComponent().getElement());
-  render(main$, new MainSortComponent().getElement());
+  render(header$, new HeaderProfileComponent());
+  render(main$, new MainNavigationComponent());
+  render(main$, new MainSortComponent());
 
   renderFilmList(main$, films);
 };

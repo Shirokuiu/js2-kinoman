@@ -1,4 +1,4 @@
-import { createElement } from '@helpers';
+import { createElement } from '@helpers/render';
 
 const createMainNavigationTemplate = () => `<nav class="main-navigation">
     <div class="main-navigation__items">

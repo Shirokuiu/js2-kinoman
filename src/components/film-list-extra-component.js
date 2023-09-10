@@ -1,4 +1,4 @@
-import { createElement } from '@helpers';
+import { createElement } from '@helpers/render';
 
 const createFilmListExtraTemplate = (id, title = 'Title') => `<section id="${id}" class="films-list--extra">
   <h2 class="films-list__title">${title}</h2>

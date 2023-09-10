@@ -1,4 +1,4 @@
-import { createElement } from '@helpers';
+import { createElement } from '@helpers/render';
 
 const createFilmsListTemplate = () => `<section class="films">
   <section class="films-list">

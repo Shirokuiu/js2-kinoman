@@ -1,4 +1,4 @@
-import { getRandomInt, shuffle } from 'src/helpers';
+import { getRandomInt, shuffle } from '@helpers/common';
 
 const DESCRIPTIONS = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',

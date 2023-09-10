@@ -1,4 +1,4 @@
-import { createElement } from '@helpers';
+import { createElement } from '@helpers/render';
 
 const getControlsActiveClass = (flag) => (flag ? ' film-card__controls-item--active' : '');
 

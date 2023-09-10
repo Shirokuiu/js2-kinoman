@@ -1,4 +1,4 @@
-import { createElement } from '@helpers';
+import { createElement } from '@helpers/render';
 
 const createMainSortTemplate = () => `<ul class="sort">
     <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
