@@ -13,6 +13,7 @@ module.exports = {
     alias: {
       '@components': path.join(__dirname, 'src/components'),
       '@constants': path.join(__dirname, 'src/constants'),
+      '@helpers': path.join(__dirname, 'src/helpers'),
     },
   },
   devServer: {

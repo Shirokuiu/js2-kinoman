@@ -1,4 +1,4 @@
-import { Positions } from '@constants';
+import { RenderPosition } from '@constants';
 
 export const getRandomInt = (min, max) => {
   const minNum = Math.ceil(min);
@@ -22,6 +22,25 @@ export const shuffle = (arr) => {
   return copyArr;
 };
 
-export const render = (container, template, position = Positions.BEFOREEND) => {
-  container.insertAdjacentHTML(position, template);
+export const render = (container, element, place = RenderPosition.BEFOREEND) => {
+  switch (place) {
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+
+      break;
+    default:
+      break;
+  }
+};
+
+export const createElement = (template) => {
+  if (!template) {
+    throw new Error('Prop template is required');
+  }
+
+  const newElement = document.createElement('div');
+
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
 };
