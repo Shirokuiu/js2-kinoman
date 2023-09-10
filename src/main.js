@@ -1,14 +1,51 @@
-import {
-  containerForFilms,
-  filmCard,
-  filmListExtra,
-  headerProfile,
-  mainNavigation,
-  mainSort,
-  showMoreBtn,
-} from '@components';
 import { generateFilms } from 'src/mocks/generate-films';
-import { render } from 'src/helpers';
+import { render } from '@helpers';
+import HeaderProfileComponent from '@components/header-profile-component';
+import MainNavigationComponent from '@components/main-navigation-component';
+import MainSortComponent from '@components/main-sort-component';
+import FilmListComponent from '@components/film-list-component';
+import FilmCardComponent from '@components/film-card-component';
+import ShowMoreBtnComponent from '@components/show-more-btn-component';
+import FilmListExtraComponent from '@components/film-list-extra-component';
+
+const renderFilm = (containerElement$, film) => {
+  const filmCardComponentInstance = new FilmCardComponent(film);
+
+  render(containerElement$, filmCardComponentInstance.getElement());
+};
+
+const renderFilmListExtra = (container, id, title, films) => {
+  const [firstFilm, secondFilm] = films;
+  const filmListExtraComponent$ = new FilmListExtraComponent(id, title).getElement();
+  const filmListExtraContainerForFilms$ = filmListExtraComponent$.querySelector('.films-list__container');
+
+  render(container, filmListExtraComponent$);
+
+  [firstFilm, secondFilm].forEach((film) => {
+    render(filmListExtraContainerForFilms$, new FilmCardComponent(film).getElement());
+  });
+};
+
+const renderFilmList = (container$, films) => {
+  const filmListComponent$ = new FilmListComponent().getElement();
+
+  render(container$, filmListComponent$);
+
+  const filmsListContainer$ = filmListComponent$.querySelector('.films-list');
+  const filmsContainer$ = filmListComponent$.querySelector('.films-list__container');
+  films.forEach((film) => {
+    renderFilm(filmsContainer$, film);
+  });
+
+  render(filmsListContainer$, new ShowMoreBtnComponent().getElement());
+
+  [
+    { id: 'topRated', title: 'Top rated' },
+    { id: 'mostCommented', title: 'Most commented' },
+  ].forEach(({ id, title }) => {
+    renderFilmListExtra(filmListComponent$, id, title, films);
+  });
+};
 
 const init = () => {
   const films = generateFilms(20);
@@ -16,38 +53,11 @@ const init = () => {
   const header$ = body$.querySelector('.header');
   const main$ = body$.querySelector('.main');
 
-  render(header$, headerProfile());
-  render(main$, mainNavigation());
-  render(main$, mainSort());
-  render(main$, containerForFilms());
+  render(header$, new HeaderProfileComponent().getElement());
+  render(main$, new MainNavigationComponent().getElement());
+  render(main$, new MainSortComponent().getElement());
 
-  const containerForFilms$ = main$.querySelector('.films');
-  const containerForFilmList$ = containerForFilms$.querySelector('.films-list');
-  const containerForFilmListCard$ = containerForFilmList$.querySelector('.films-list__container');
-
-  films.forEach((film) => {
-    render(containerForFilmListCard$, filmCard(film));
-  });
-
-  render(containerForFilmList$, showMoreBtn());
-
-  [
-    { id: 'topRated', title: 'Top rated' },
-    { id: 'mostCommented', title: 'Most commented' },
-  ].forEach(({ id, title }) => {
-    render(containerForFilms$, filmListExtra(id, title));
-  });
-
-  const topRatedContainer$ = containerForFilms$.querySelector('#topRated');
-  const mostCommentedContainer$ = containerForFilms$.querySelector('#mostCommented');
-  const topRatedContainerFilmsContainer$ = topRatedContainer$.querySelector('.films-list__container');
-  const mostCommentedContainerFilmsContainer$ = mostCommentedContainer$.querySelector('.films-list__container');
-
-  [topRatedContainerFilmsContainer$, mostCommentedContainerFilmsContainer$].forEach((container) => {
-    [films[0], films[1]].forEach((film) => {
-      render(container, filmCard(film));
-    });
-  });
+  renderFilmList(main$, films);
 };
 
 init();
