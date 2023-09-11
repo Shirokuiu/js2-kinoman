@@ -11,10 +11,11 @@
     "node": true
   },
   "rules": {
-    "quotes": ["error", "single"],
+    "quotes": ["warn", "single"],
     "prettier/prettier": ["error"],
     "import/prefer-default-export": ["off"],
-    "import/no-unresolved": ["off"]
+    "import/no-unresolved": ["off"],
+    "class-methods-use-this": ["error", {"exceptMethods":  ["getTemplate"]}]
   },
   "settings": {
     "import/resolver": {
