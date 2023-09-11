@@ -12,6 +12,7 @@ module.exports = {
     modules: [path.resolve(__dirname, './'), 'node_modules'],
     alias: {
       '@components': path.join(__dirname, 'src/components'),
+      '@controllers': path.join(__dirname, 'src/controllers'),
       '@constants': path.join(__dirname, 'src/constants'),
       '@helpers': path.join(__dirname, 'src/helpers'),
     },
