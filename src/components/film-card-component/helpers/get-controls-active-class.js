@@ -1,8 +1,6 @@
-import { createElement } from '@helpers';
+import { getControlsActiveClass } from '@components/film-card-component/helpers';
 
-const getControlsActiveClass = (flag) => (flag ? ' film-card__controls-item--active' : '');
-
-const createFilmCardTemplate = (film) => {
+export const createFilmCardTemplate = (film) => {
   const { title, rating, info, poster, description, comments, inWatchList, watched, favorite } = film;
 
   const watchListActiveClass = getControlsActiveClass(inWatchList);
@@ -27,29 +25,3 @@ const createFilmCardTemplate = (film) => {
           </form>
         </article>`;
 };
-
-export default class FilmCardComponent {
-  #element;
-
-  #film;
-
-  constructor(film) {
-    this.#film = film;
-  }
-
-  getElement() {
-    if (!this.#element) {
-      this.#element = createElement(this.#getTemplate());
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
-
-  #getTemplate() {
-    return createFilmCardTemplate(this.#film);
-  }
-}
