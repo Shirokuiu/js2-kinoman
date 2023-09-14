@@ -7,21 +7,21 @@ import FilmsContainerController from 'src/controllers/films-container-controller
 import AbstractController from 'src/controllers/abstract-controller';
 
 export default class AppController extends AbstractController {
-  #headerProfileComponentInstance;
+  #headerProfileComponent;
 
-  #mainNavigationComponentInstance;
+  #mainNavigationComponent;
 
-  #mainSortComponentInstance;
+  #mainSortComponent;
 
-  #filmsContainerControllerInstance;
+  #filmsContainerController;
 
   constructor(container$) {
     super(container$);
 
-    this.#headerProfileComponentInstance = new HeaderProfileComponent();
-    this.#mainNavigationComponentInstance = new MainNavigationComponent();
-    this.#mainSortComponentInstance = new MainSortComponent();
-    this.#filmsContainerControllerInstance = new FilmsContainerController(container$.querySelector('.main'));
+    this.#headerProfileComponent = new HeaderProfileComponent();
+    this.#mainNavigationComponent = new MainNavigationComponent();
+    this.#mainSortComponent = new MainSortComponent();
+    this.#filmsContainerController = new FilmsContainerController(container$.querySelector('.main'));
   }
 
   render() {
@@ -29,10 +29,10 @@ export default class AppController extends AbstractController {
     const header$ = this.container$.querySelector('.header');
     const main$ = this.container$.querySelector('.main');
 
-    render(header$, this.#headerProfileComponentInstance);
-    render(main$, this.#mainNavigationComponentInstance);
-    render(main$, this.#mainSortComponentInstance);
+    render(header$, this.#headerProfileComponent);
+    render(main$, this.#mainNavigationComponent);
+    render(main$, this.#mainSortComponent);
 
-    this.#filmsContainerControllerInstance.render(films);
+    this.#filmsContainerController.render(films);
   }
 }

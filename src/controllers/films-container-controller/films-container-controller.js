@@ -7,15 +7,15 @@ import AbstractController from '@controllers/abstract-controller';
 import { makeExtraListData } from '@controllers/films-container-controller/helpers/make-extra-list-data';
 
 export default class FilmsContainerController extends AbstractController {
-  #filmsContainerComponentInstance;
+  #filmsContainerComponent;
 
-  #showMoreBtnComponentInstance;
+  #showMoreBtnComponent;
 
   constructor(container$) {
     super(container$);
 
-    this.#filmsContainerComponentInstance = new FilmsContainerComponent();
-    this.#showMoreBtnComponentInstance = new ShowMoreBtnComponent();
+    this.#filmsContainerComponent = new FilmsContainerComponent();
+    this.#showMoreBtnComponent = new ShowMoreBtnComponent();
   }
 
   render(films) {
@@ -23,24 +23,19 @@ export default class FilmsContainerController extends AbstractController {
   }
 
   #renderFilmsContainer(container$, films) {
-    render(container$, this.#filmsContainerComponentInstance);
+    render(container$, this.#filmsContainerComponent);
 
-    const filmsListContainer$ = this.#filmsContainerComponentInstance.getElement().querySelector('.films-list');
-    const filmsContainer$ = this.#filmsContainerComponentInstance.getElement().querySelector('.films-list__container');
+    const filmsListContainer$ = this.#filmsContainerComponent.getElement().querySelector('.films-list');
+    const filmsContainer$ = this.#filmsContainerComponent.getElement().querySelector('.films-list__container');
 
     films.forEach((film) => {
       render(filmsContainer$, new FilmCardComponent(film));
     });
 
-    render(filmsListContainer$, this.#showMoreBtnComponentInstance);
+    render(filmsListContainer$, this.#showMoreBtnComponent);
 
     makeExtraListData().forEach(({ id, title }) => {
-      FilmsContainerController.#renderFilmListExtra(
-        this.#filmsContainerComponentInstance.getElement(),
-        id,
-        title,
-        films,
-      );
+      FilmsContainerController.#renderFilmListExtra(this.#filmsContainerComponent.getElement(), id, title, films);
     });
   }
 
