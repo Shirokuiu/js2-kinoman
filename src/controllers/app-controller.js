@@ -5,6 +5,7 @@ import MainNavigationComponent from '@components/main-navigation-component/main-
 import MainSortComponent from '@components/main-sort-component/main-sort-component';
 import FilmsContainerController from 'src/controllers/films-container-controller/films-container-controller';
 import AbstractController from 'src/controllers/abstract-controller';
+import FilmsModel from 'src/models/films-model';
 
 export default class AppController extends AbstractController {
   #headerProfileComponent;
@@ -15,13 +16,19 @@ export default class AppController extends AbstractController {
 
   #filmsContainerController;
 
+  #filmsModel;
+
   constructor(container$) {
     super(container$);
 
+    this.#filmsModel = new FilmsModel();
     this.#headerProfileComponent = new HeaderProfileComponent();
     this.#mainNavigationComponent = new MainNavigationComponent();
     this.#mainSortComponent = new MainSortComponent();
     this.#filmsContainerController = new FilmsContainerController(container$.querySelector('.main'));
+
+    this.onFilmsChangeModel = this.onFilmsChangeModel.bind(this);
+    this.#filmsModel.subscribe(this.onFilmsChangeModel);
   }
 
   render() {
@@ -33,6 +40,10 @@ export default class AppController extends AbstractController {
     render(main$, this.#mainNavigationComponent);
     render(main$, this.#mainSortComponent);
 
-    this.#filmsContainerController.render(films);
+    this.#filmsModel.films = films;
+  }
+
+  onFilmsChangeModel() {
+    this.#filmsContainerController.render(this.#filmsModel.films);
   }
 }
