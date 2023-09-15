@@ -1,4 +1,5 @@
 import { RenderPosition } from '@constants';
+import AbstractComponent from '@components/abstract-component';
 
 export const render = (container$, componentInstance, place = RenderPosition.BEFOREEND) => {
   switch (place) {
@@ -23,7 +24,15 @@ export const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export const remove = (componentInstance) => {
-  componentInstance.getElement().remove();
-  componentInstance.removeElement();
+export const remove = (component) => {
+  if (component === null) {
+    return;
+  }
+
+  if (!(component instanceof AbstractComponent)) {
+    throw new Error('Possible to remove only components');
+  }
+
+  component.getElement().remove();
+  component.removeElement();
 };
