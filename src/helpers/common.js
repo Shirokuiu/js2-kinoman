@@ -23,8 +23,8 @@ export const shuffle = (arr) => {
 export class EventEmitter {
   #emitters = [];
 
-  emit() {
-    this.#emitters.forEach((emitter) => emitter());
+  emit(evt) {
+    this.#emitters.forEach((emitter) => emitter(evt));
   }
 
   subscribe(cb) {
