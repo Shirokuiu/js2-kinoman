@@ -1,10 +1,10 @@
 import { RenderPosition } from '@constants';
 import AbstractComponent from '@components/abstract-component';
 
-export const render = (container$, componentInstance, place = RenderPosition.BEFOREEND) => {
+export const render = (container$, component, place = RenderPosition.BEFOREEND) => {
   switch (place) {
     case RenderPosition.BEFOREEND:
-      container$.append(componentInstance.getElement());
+      container$.append(component.getElement());
 
       break;
     default:
