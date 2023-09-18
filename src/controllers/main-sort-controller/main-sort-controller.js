@@ -31,7 +31,9 @@ export default class MainSortController extends AbstractController {
   }
 
   handleSortBtnClick(newSortType) {
-    this.#mainSortModel.activeSortType = newSortType;
+    if (newSortType !== this.#mainSortModel.activeSortType) {
+      this.#mainSortModel.activeSortType = newSortType;
+    }
   }
 
   #render() {
