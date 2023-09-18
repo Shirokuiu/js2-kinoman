@@ -37,7 +37,7 @@ export default class MainNavigationView extends AbstractView {
       itemNavigation.addEventListener('click', (evt) => {
         evt.preventDefault();
 
-        cb(evt.target.dataset.filterType);
+        cb(evt.currentTarget.dataset.filterType);
       });
     });
   }
