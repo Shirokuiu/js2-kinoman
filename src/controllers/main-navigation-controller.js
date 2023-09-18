@@ -20,6 +20,8 @@ export default class MainNavigationController extends AbstractController {
 
     this.handleFilmsModelEvent = this.handleFilmsModelEvent.bind(this);
     this.handleMainNavigationModelEvent = this.handleMainNavigationModelEvent.bind(this);
+
+    this.handleMainNavigationItemClick = this.handleMainNavigationItemClick.bind(this);
   }
 
   init() {
@@ -37,14 +39,18 @@ export default class MainNavigationController extends AbstractController {
     this.#render();
   }
 
+  handleMainNavigationItemClick(activeFilterType) {
+    if (activeFilterType !== this.#mainNavigationModel.activeFilterType) {
+      this.#mainNavigationModel.activeFilterType = activeFilterType;
+    }
+  }
+
   #render() {
     const previous = this.#mainNavigationComponent;
 
     this.#mainNavigationComponent = new MainNavigationView(this.#filters, this.#mainNavigationModel.activeFilterType);
 
-    this.#mainNavigationComponent.onMainNavigationItemClick((activeFilterType) => {
-      this.#mainNavigationModel.activeFilterType = activeFilterType;
-    });
+    this.#mainNavigationComponent.onMainNavigationItemClick(this.handleMainNavigationItemClick);
 
     if (previous === null) {
       render(this.container$, this.#mainNavigationComponent, RenderPosition.AFTERBEGIN);

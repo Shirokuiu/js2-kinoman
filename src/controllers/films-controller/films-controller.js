@@ -2,7 +2,8 @@ import AbstractController from '@core/abstract-controller';
 import FilmsView from '@components/films-view';
 import { remove, render, replace } from '@core/common';
 import FilmCardController from '@controllers/film-card-controller';
-import { FilterType } from '@constants';
+import { getFilteredFilmsByFilterType } from '@controllers/films-controller/helpers/get-filtered-films-by-filter-type';
+import { getSortedFilmsBySortType } from '@controllers/films-controller/helpers/get-sorted-films-by-sort-type';
 
 export default class FilmsController extends AbstractController {
   #filmCardController = null;
@@ -15,14 +16,18 @@ export default class FilmsController extends AbstractController {
 
   #mainNavigationModel = null;
 
-  constructor(container$, filmsModel, mainNavigationModel) {
+  #mainSortModel = null;
+
+  constructor(container$, filmsModel, mainNavigationModel, mainSortModel) {
     super(container$);
 
     this.#filmsModel = filmsModel;
     this.#mainNavigationModel = mainNavigationModel;
+    this.#mainSortModel = mainSortModel;
 
     this.handleFilmsModelEvent = this.handleFilmsModelEvent.bind(this);
     this.handleMainNavigationModelEvent = this.handleMainNavigationModelEvent.bind(this);
+    this.handleMainSortModelEvent = this.handleMainSortModelEvent.bind(this);
   }
 
   init() {
@@ -30,33 +35,26 @@ export default class FilmsController extends AbstractController {
 
     this.#filmsModel.subscribe(this.handleFilmsModelEvent);
     this.#mainNavigationModel.subscribe(this.handleMainNavigationModelEvent);
+    this.#mainSortModel.subscribe(this.handleMainSortModelEvent);
+  }
+
+  handleMainSortModelEvent() {
+    this.#renderFilmsByFilterAndSort();
   }
 
   handleMainNavigationModelEvent() {
-    switch (this.#mainNavigationModel.activeFilterType) {
-      case FilterType.ALL:
-        this.#renderFilmCards(this.#filmsModel.films);
-
-        break;
-      case FilterType.WATCHLIST:
-        this.#renderFilmCards(this.#filmsModel.inWatchItems);
-
-        break;
-      case FilterType.WATCHED:
-        this.#renderFilmCards(this.#filmsModel.watchedItems);
-
-        break;
-      case FilterType.FAVORITES:
-        this.#renderFilmCards(this.#filmsModel.favorites);
-
-        break;
-      default:
-        break;
-    }
+    this.#renderFilmsByFilterAndSort();
   }
 
   handleFilmsModelEvent() {
     this.#renderFilmCards(this.#filmsModel.films);
+  }
+
+  #renderFilmsByFilterAndSort() {
+    const filteredFilms = getFilteredFilmsByFilterType(this.#filmsModel, this.#mainNavigationModel.activeFilterType);
+    const sortedFilms = getSortedFilmsBySortType(filteredFilms, this.#mainSortModel.activeSortType);
+
+    this.#renderFilmCards(sortedFilms);
   }
 
   #renderFilmCards(films) {
