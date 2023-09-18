@@ -1,10 +1,6 @@
-import AppController from 'src/controllers/app-controller';
+import AppController from '@controllers/app-controller';
 
-const init = () => {
-  const body$ = document.querySelector('body');
-  const appControllerInstance = new AppController(body$);
+const mainContainer$ = document.querySelector('body');
+const appController = new AppController(mainContainer$);
 
-  appControllerInstance.render();
-};
-
-init();
+appController.init();
