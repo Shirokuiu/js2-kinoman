@@ -15,7 +15,7 @@
     "prettier/prettier": ["error"],
     "import/prefer-default-export": ["off"],
     "import/no-unresolved": ["off"],
-    "class-methods-use-this": ["error", {"exceptMethods":  ["getTemplate", "render"]}]
+    "class-methods-use-this": ["error", {"exceptMethods":  ["getTemplate", "init"]}]
   },
   "settings": {
     "import/resolver": {

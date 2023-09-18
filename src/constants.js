@@ -4,3 +4,9 @@ export const FilterType = {
   WATCHED: 'watched',
   FAVORITES: 'favorite',
 };
+
+export const SortType = {
+  DEFAULT: 'default',
+  DATE: 'date',
+  RATING: 'rating',
+};
