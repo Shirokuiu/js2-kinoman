@@ -1,4 +1,4 @@
-import AbstractModel from 'src/models/abstract-model';
+import AbstractModel from '@core/abstract-model';
 
 export default class FilmsModel extends AbstractModel {
   #films = [];
@@ -9,6 +9,18 @@ export default class FilmsModel extends AbstractModel {
 
   set films(films) {
     this.#films = films;
-    this.observer.emit(films);
+    this.eventEmitter.emit(films);
+  }
+
+  get inWatchItems() {
+    return this.#films.filter(({ inWatchList }) => inWatchList);
+  }
+
+  get watchedItems() {
+    return this.#films.filter(({ watched }) => watched);
+  }
+
+  get favorites() {
+    return this.#films.filter(({ favorite }) => favorite);
   }
 }

@@ -1,10 +1,10 @@
-import { createElement } from '@helpers/render';
+import { createElement } from '@core/common';
 
-export default class AbstractComponent {
+export default class AbstractView {
   #element;
 
   constructor() {
-    if (new.target === AbstractComponent) {
+    if (new.target === AbstractView) {
       throw new Error(`Can't instantiate AbstractComponent, only concrete one`);
     }
   }

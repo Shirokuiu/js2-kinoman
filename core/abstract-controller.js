@@ -3,13 +3,13 @@ export default class AbstractController {
 
   constructor(container$) {
     if (new.target === 'AbstractController') {
-      throw new Error(`Can't instantiate AbstractComponent, only concrete one`);
+      throw new Error(`Can't instantiate AbstractController, only concrete one`);
     }
 
     this.container$ = container$;
   }
 
-  render() {
-    throw new Error('Abstract method not implemented: getTemplate');
+  init() {
+    throw new Error('Abstract method not implemented: init');
   }
 }

@@ -19,19 +19,3 @@ export const shuffle = (arr) => {
 
   return copyArr;
 };
-
-export class EventEmitter {
-  #emitters = [];
-
-  emit(evt) {
-    this.#emitters.forEach((emitter) => emitter(evt));
-  }
-
-  subscribe(cb) {
-    this.#emitters.push(cb);
-  }
-
-  unsubscribe(cb) {
-    this.#emitters = this.#emitters.filter((emitter) => emitter !== cb);
-  }
-}
