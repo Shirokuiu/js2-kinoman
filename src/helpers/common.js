@@ -1,3 +1,5 @@
+import { SortType } from '@constants';
+
 export const getRandomInt = (min, max) => {
   const minNum = Math.ceil(min);
   const maxNum = Math.floor(max);
@@ -19,3 +21,11 @@ export const shuffle = (arr) => {
 
   return copyArr;
 };
+
+export const makeFactoryForSortedFilms = (films) => ({
+  [SortType.DEFAULT]: films,
+  [SortType.DATE]: [...films].sort((a, b) => b.info.year - a.info.year),
+  [SortType.RATING]: [...films].sort((a, b) => b.rating - a.rating),
+});
+
+export const getSortedFilmsBySortType = (films, sortType) => makeFactoryForSortedFilms(films)[sortType];
