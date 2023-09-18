@@ -3,12 +3,15 @@ import FilmsView from '@components/films-view';
 import { remove, render, replace } from '@core/common';
 import FilmCardController from '@controllers/film-card-controller';
 import { getFilteredFilmsByFilterType } from '@controllers/films-controller/helpers/get-filtered-films-by-filter-type';
-import { getSortedFilmsBySortType } from '@controllers/films-controller/helpers/get-sorted-films-by-sort-type';
+import { getSortedFilmsBySortType } from '@helpers/common';
+import FilmListTopRatedController from '@controllers/film-list-top-rated-controller';
 
 export default class FilmsController extends AbstractController {
   #filmCardController = null;
 
   #filmCardControllers = [];
+
+  #filmListTopRatedController = null;
 
   #filmsComponent = null;
 
@@ -32,6 +35,7 @@ export default class FilmsController extends AbstractController {
 
   init() {
     this.#renderFilmsComponent();
+    this.#renderFilmsListTopRated();
 
     this.#filmsModel.subscribe(this.handleFilmsModelEvent);
     this.#mainNavigationModel.subscribe(this.handleMainNavigationModelEvent);
@@ -90,5 +94,14 @@ export default class FilmsController extends AbstractController {
 
     replace(this.#filmsComponent, previous);
     remove(previous);
+  }
+
+  #renderFilmsListTopRated() {
+    this.#filmListTopRatedController = new FilmListTopRatedController(
+      this.#filmsComponent.getElement(),
+      this.#filmsModel,
+    );
+
+    this.#filmListTopRatedController.init();
   }
 }
