@@ -5,6 +5,7 @@ import FilmCardController from '@controllers/film-card-controller';
 import { getFilteredFilmsByFilterType } from '@controllers/films-controller/helpers/get-filtered-films-by-filter-type';
 import { getSortedFilmsBySortType } from '@helpers/common';
 import FilmListTopRatedController from '@controllers/film-list-top-rated-controller';
+import FilmListMostCommentedController from '@controllers/film-list-most-commented-controller';
 
 export default class FilmsController extends AbstractController {
   #filmCardController = null;
@@ -12,6 +13,8 @@ export default class FilmsController extends AbstractController {
   #filmCardControllers = [];
 
   #filmListTopRatedController = null;
+
+  #filmListMostCommentedController = null;
 
   #filmsComponent = null;
 
@@ -36,6 +39,7 @@ export default class FilmsController extends AbstractController {
   init() {
     this.#renderFilmsComponent();
     this.#renderFilmsListTopRated();
+    this.#renderFilmListMostCommented();
 
     this.#filmsModel.subscribe(this.handleFilmsModelEvent);
     this.#mainNavigationModel.subscribe(this.handleMainNavigationModelEvent);
@@ -103,5 +107,14 @@ export default class FilmsController extends AbstractController {
     );
 
     this.#filmListTopRatedController.init();
+  }
+
+  #renderFilmListMostCommented() {
+    this.#filmListMostCommentedController = new FilmListMostCommentedController(
+      this.#filmsComponent.getElement(),
+      this.#filmsModel,
+    );
+
+    this.#filmListMostCommentedController.init();
   }
 }

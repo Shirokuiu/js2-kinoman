@@ -2,7 +2,10 @@ import AbstractModel from '@core/abstract-model';
 import { getSortedFilmsBySortType } from '@helpers/common';
 import { SortType } from '@constants';
 
-const TOP_RATED_SLICE_COUNT = 2;
+const FilmsExtraSliceCount = {
+  TOP_RATED: 2,
+  MOST_COMMENTED: 2,
+};
 
 export default class FilmsModel extends AbstractModel {
   #films = [];
@@ -29,6 +32,10 @@ export default class FilmsModel extends AbstractModel {
   }
 
   get topRated() {
-    return getSortedFilmsBySortType(this.#films, SortType.RATING).slice(0, TOP_RATED_SLICE_COUNT);
+    return getSortedFilmsBySortType(this.#films, SortType.RATING).slice(0, FilmsExtraSliceCount.TOP_RATED);
+  }
+
+  get mostCommented() {
+    return getSortedFilmsBySortType(this.#films, SortType.COMMENTS).slice(0, FilmsExtraSliceCount.MOST_COMMENTED);
   }
 }

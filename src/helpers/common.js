@@ -26,6 +26,7 @@ export const makeFactoryForSortedFilms = (films) => ({
   [SortType.DEFAULT]: films,
   [SortType.DATE]: [...films].sort((a, b) => b.info.year - a.info.year),
   [SortType.RATING]: [...films].sort((a, b) => b.rating - a.rating),
+  [SortType.COMMENTS]: [...films].sort((a, b) => b.comments - a.comments),
 });
 
 export const getSortedFilmsBySortType = (films, sortType) => makeFactoryForSortedFilms(films)[sortType];

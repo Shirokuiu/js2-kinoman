@@ -3,14 +3,14 @@ import FilmListExtraView from '@components/film-list-extra-view';
 import { remove, render, replace } from '@core/common';
 import FilmCardController from '@controllers/film-card-controller';
 
-export default class FilmListTopRatedController extends AbstractController {
-  #filmCardController = null;
-
-  #filmCardControllers = [];
+export default class FilmListMostCommentedController extends AbstractController {
+  #filmsModel = null;
 
   #filmListExtraComponent = null;
 
-  #filmsModel = null;
+  #filmCardController = null;
+
+  #filmCardControllers = [];
 
   constructor(container$, filmsModel) {
     super(container$);
@@ -27,13 +27,13 @@ export default class FilmListTopRatedController extends AbstractController {
   }
 
   handleFilmsModelEvent() {
-    this.#renderFilmCards(this.#filmsModel.topRated);
+    this.#renderFilmCards(this.#filmsModel.mostCommented);
   }
 
   #render() {
     const previous = this.#filmListExtraComponent;
 
-    this.#filmListExtraComponent = new FilmListExtraView('Top rated');
+    this.#filmListExtraComponent = new FilmListExtraView('Most commented');
 
     if (previous === null) {
       render(this.container$, this.#filmListExtraComponent);
@@ -64,6 +64,7 @@ export default class FilmListTopRatedController extends AbstractController {
     this.#filmCardController = new FilmCardController(this.#filmListExtraComponent.getContainerForFilms(), film);
 
     this.#filmCardControllers.push(this.#filmCardController);
+
     this.#filmCardController.init();
   }
 }
